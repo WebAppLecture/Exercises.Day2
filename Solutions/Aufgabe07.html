@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<title>Lösung zur 7. Aufgabe</title>
+</head>
+<body>
+<script>
+function calc() {
+	var x = parseFloat(zahl1.value);
+	var y = parseFloat(zahl2.value);
+	var result = 0;
+	
+	if(isNaN(x) || isNaN(y))
+		alert('Nur gültige Zahlen eingeben!');
+	else {
+		switch(op.selectedIndex) {
+			case 1:
+				result = x - y;
+				break;
+			case 2:
+				result = x * y;
+				break;
+			case 3:
+				result = x / y;
+				break;
+			default:
+				result = x + y;
+				break;
+		}
+		
+		ergebnis.value = result;
+	}
+}
+</script>
+<input type="text" name="zahl1" value="0" />
+<select name="op">
+<option value="0">+</option><option value="1">-</option><option value="2">*</option><option value="3">/</option>
+</select>
+<input type="text" name="zahl2" value="0" />
+<button onclick="calc();">=</button>
+<input type="text" name="ergebnis" value="0" readonly />
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-10-15T18:15Z" style="display: inline;">15.10.2011 um 19:15</time></footer>
+</body>
+</html>

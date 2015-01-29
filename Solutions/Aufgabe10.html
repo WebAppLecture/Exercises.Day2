@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<title>Lösung zur 10. Aufgabe</title>
+</head>
+<body>
+<script>
+var win = null;
+
+function stringDialog() {
+	var eval = document.getElementById('evaluation');
+	
+	if(win == null || win.closed) {
+		win = window.open('','','width=300,height=500');//Fenster öffnen
+		win.document.write('Bitte den zu analysierenden Text eingeben:<br/>');//Ein wenig Text!
+		var txt = win.document.createElement('input');//Element mit direkten Zugriff
+		txt.type = 'text';//Setze das Attribut type auf type=text
+		win.document.body.appendChild(txt);//Dem Body anhängen - sonst sehen wir nichts
+		win.document.write('<br/>');//Zeilenumbruch hinzufügen
+		var res = win.document.createElement('span');//Span Element erstellen für Ausgabe
+		win.document.body.appendChild(res);//Hinzufügen
+		txt.onkeyup = function() { //Nesten der onkeyup Methode
+			var s = txt.value.toString();
+			var ausgabe = [];
+			ausgabe.push('Länge der Eingabe: ' + s.length.toString().bold());
+			ausgabe.push('Unterschiedliche Zeichen: ' + different(s).toString().bold());			
+			ausgabe.push('Anzahl der Wörter: ' + words(s).toString().bold());			
+			ausgabe.push('Anzahl der Nichtbuchstaben: ' + nonletters(s).toString().bold());
+			res.innerHTML = ausgabe.join('<br/>');
+			ausgabe = [];
+			ausgabe.push('Die Wörter waren:<br/>- ' + s.split(' ').join('<br/>- '));
+			ausgabe.push('Summe der Zahlen: ' + sum(s).toString().bold());
+			ausgabe.push('');//Mit leeren Zeile abschließen
+			eval.innerHTML = ausgabe.join('<br/>');
+		};
+		var bt = win.document.createElement('button'); //Button zum schließen erstellen
+		bt.innerHTML = 'Schließen'; //Text setzen
+		bt.onclick = function() { win.close(); }; //Methode für Eventhandler
+		win.document.body.appendChild(bt);//Anhängen
+	}
+}
+
+function different(s) { //Unterschiedliche Zeichen rausfinden
+	s = s.replace(/ /g, ''); //Über globalen regulären Ausdruck die Leerzeichen entfernen
+	var bisher = [];
+	
+	for(var i = 0; i < s.length; i++) {
+		var found = false;//Markierer
+		var c = s.charAt(i);//Zeichen an i-ter Stelle
+		
+		for(var j = 0; j < bisher.length; j++) { //Durchgehen
+			if(bisher[j] === c) {//Gefunden!
+				found = true;
+				break;//Abbrechen - gabs schon!
+			}
+		}
+		
+		if(!found) //Wenns das Zeichen noch nicht gab - dann hinzufügen
+			bisher.push(c);
+	}
+	
+	return bisher.length; //Liste der einzigartigen Zeichen
+}
+
+function words(s) { //Anzahl der Wörter
+	return s.split(' ').length;//An leerzeichen gesplittet (Array) - Länge davon
+}
+
+function nonletters(s) { //Nicht-Buchstaben
+	s = s.replace(/ /g, '');//Leerzeichen entfernen
+	var k = 0;
+	
+	for(var i = 0; i < s.length; i++) {
+		var c = s.charAt(i);
+		
+		if(!/[A-Za-z]/.test(c)) //Regulärer Ausdruck A-Za-z -> Wenn das nicht validiert ist es ein Sonderzeichen
+			k++;
+	}
+	
+	return k;
+}
+
+function sum(s) { //Summe
+	s = s.replace(/ /g, '');
+	var k = 0;
+	
+	for(var i = 0; i < s.length; i++) {
+		var c = parseInt(s.charAt(i)); //Hole einzelnes Zeichen
+		
+		if(!isNaN(c)) //Wurde NaN geworfen?!
+			k += c; //Falls nein, dann hinzufügen!
+	}
+	
+	return k;
+}
+</script>
+<button onclick="stringDialog();">String-Dialog öffnen</button><br/>
+<span id="evaluation"></span>
+<footer>&copy; <address style="display: inline;">Florian Rappl</address>. Zuletzt aktualisiert am <time datetime="2011-11-07T18:48Z" style="display: inline;">07.11.2011 um 19:49</time></footer>
+</body>
+</html>
