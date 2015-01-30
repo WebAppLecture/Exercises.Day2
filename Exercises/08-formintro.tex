@@ -1,0 +1,36 @@
+\RequiredExercise{Ein Formular erschaffen}
+%
+\par Das Formular verfügt über 8 Felder, von denen Sie so oft wie möglich ein
+HTML5 Feld verwenden sollen:
+%
+\begin{itemize}
+\item
+Name*, hier soll nach dem Muster Name, Vorname eingegeben werden, z.B.:
+\begin{lstlisting}
+[a-zA-Z\-]+,\s[a-zA-Z]+
+\end{lstlisting}
+\item
+E-Mail*
+\item
+Telefonnummer, mit dem Format (für z.B. +49 (941) 1234):
+\begin{lstlisting}
+\+[0-9]{2}\s?\([0-9]{3}\)\s?[0-9]{4,}
+\end{lstlisting}
+\item
+Geburtstag* (Datum\footnote{Geht nicht bei Firefox (Version 7) und IE
+(Version 9)})
+\item
+Anzahl der bisherigen Leistungspunkte (dies soll als Slider eingebaut werden
+von $0$ bis $180$)
+\item
+Url der Homepage
+\item
+Passwort*
+\item
+Passwortbestätigung*
+\end{itemize}
+%
+\par Mit * versehene Punkte sollen Pflichtfelder darstellen. Beim Betreten der
+Seite muss das erste Feld (Name) automatisch fokussiert werden. Einen Button
+zum Versenden des Formulars können Sie z.B. über
+\htag{input type=submit value='Ich bin der Button!'} erstellen.
